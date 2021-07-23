@@ -1,0 +1,23 @@
+const express = require("require")
+const mongoose = require("mongoose")
+const url = 'mongodb://localhost:27017/Usermodel'
+
+const app = express()
+
+mongoose.connect(url, {useNewUrlParser:true})
+const con = mongoose.connection
+
+con.on('open', () => {
+    console.log('connected')
+})
+
+app.use(express.json())
+
+const userRouter = require('../routers/users')
+app.use('/users',userRouter)
+
+
+
+app.listen(3000, () => {
+    console.log('listening on port 3000')
+} )
